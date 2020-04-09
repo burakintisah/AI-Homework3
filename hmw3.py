@@ -1,11 +1,16 @@
 import copy
 import random
 from tkinter import *
-
+"""
+SOLUTION OF THE FOURTH PART: 
+4x4 Tic-Tac-Toe game is a futile game. Because for empty initial state alfa-beta pruning code outputs as 0. 
+Which means if both sides properly play this game, the game always ends with draw. 
+"""
 class node:
     def __init__(self, state):
         self.state = state
         self.best = None
+        self.virtual = None
 
 def st_print(state):
     print("*****************")
@@ -94,7 +99,9 @@ def alpha_beta_pruning(x, alpha, beta):
             if value > maxValue:
                 maxValue = value
                 x.best = itr
+                x.virtual = value
             alpha = max(maxValue, alpha)
+
             if beta <= alpha:
                 break
         return maxValue
@@ -106,46 +113,68 @@ def alpha_beta_pruning(x, alpha, beta):
             if value < minValue:
                 minValue = value
                 x.best = itr
+                x.virtual = value
             beta = min(minValue, beta)
             if beta <= alpha:
                 break
         return minValue
 
-
-tie   = [["-","-","-","-"],["-","-","-","-"],["-","-","-","-"],["-","-","-","-"]]
+"""
+SOLUTION OF THE SECOND PART: 
+Three arbitrary but complete games, as visited by your alpha-beta code. One of them
+should be a win for X, the other should be a win for O, and the third one should be a tie. The
+games’ appearance (format) should be similar to the Wikipedia figure above. But don’t forget:
+you are investigating a 4x4 tic-tac-toe game!
+"""
+tie   = [["-","x","-","-"],["-","-","-","x"],["o","-","-","-"],["-","o","-","-"]]
 tie_root = node(tie)
-x_win = [["x","x","-","-"],["x","-","-","-"],["o","-","o","-"],["-","o","-","-"]]
+x_win = [["x","x","x","-"],["o","o","-","-"],["-","o","-","-"],["-","-","-","-"]]
 x_win_root = node(x_win)
-o_win = [["x","-","-","-"],["-","-","-","-"],["x","-","o","-"],["-","o","-","-"]]
+o_win = [["x","-","x","-"],["x","x","-","o"],["x","-","x","o"],["-","o","o","o"]]
 o_win_root = node(o_win)
 
-'''print("Tie Condition(Calculating..) : ")
+print("Tie Situation(Calculating..) : ")
 print(alpha_beta_pruning(tie_root,-10,10))
 print()
-'''
-print("X Win Condition (Calculating..) : ")
+print("X Win Situation (Calculating..) : ")
 print(alpha_beta_pruning(x_win_root,-10,10))
 print()
-print("O Win Condition: (Calculating..) : ")
+print("O Win Situation: (Calculating..) : ")
 print(alpha_beta_pruning(o_win_root,-10,10))
 print()
 
 
 tie_list = []
+tie_virtual_values = []
 while tie_root != None:
     tie_list.append(tie_root)
+    tie_virtual_values.append(tie_root.virtual)
     tie_root = tie_root.best
 
+
 x_win_list = []
+x_win_virtual_values = []
 while x_win_root != None:
     x_win_list.append(x_win_root)
+    x_win_virtual_values.append(x_win_root.virtual)
     x_win_root = x_win_root.best
 
+
 o_win_list = []
+o_win_virtual_values = []
 while o_win_root != None:
     o_win_list.append(o_win_root)
+    o_win_virtual_values.append(o_win_root.virtual)
     o_win_root = o_win_root.best
 
+
+
+"""
+SOLUTION OF THE FOURTH PART: 
+"""
+print("4x4 Tic-Tac-Toe game is a futile game.")
+print("To calculate for the empty board close the GUI screen and press enter: ")
+print("This is not recommended")
 master = Tk()
 master.title("ArcticFoxes")
 w = Canvas(master, width=1500, height=1000, bg="white")
@@ -190,6 +219,39 @@ def show_on_canvas (list, y,txt):
 show_on_canvas(tie_list,1," Tie Situation ")
 show_on_canvas(x_win_list,4,"X Win Situation")
 show_on_canvas(o_win_list,7,"O Win Situation ")
+
+scrollbar = Scrollbar(master,orient='horizontal')
+scrollbar.config(command=w.xview)
+scrollbar.pack(side=BOTTOM, fill=X)
+
+w.pack()
+master.mainloop()
+
+input()
+"""
+SOLUTION OF THE THIRD PART: 
+The virtual values of board situations immediately under the original board situation
+which is initially empty (the root). These values will be computed by the alpha-beta code, too.
+
+empty virtual array stores the virtual values of the boards!!
+"""
+empty_board   = [["-","-","-","-"],["-","-","-","-"],["-","-","-","-"],["-","-","-","-"]]
+empty_root = node(empty_board)
+print("Empty Board Situation (Calculating..) : ")
+print(alpha_beta_pruning(empty_root,-10,10))
+print()
+empty_list = []
+empty_virtual = []
+while empty_root != None:
+    empty_list.append(empty_root)
+    empty_virtual.append(empty_root.virtual)
+    empty_root = empty_root.best
+
+master = Tk()
+master.title("ArcticFoxes")
+w = Canvas(master, width=1500, height=1000, bg="white")
+show_on_canvas(empty_list,1,"Initially Empty Board")
+
 
 scrollbar = Scrollbar(master,orient='horizontal')
 scrollbar.config(command=w.xview)
