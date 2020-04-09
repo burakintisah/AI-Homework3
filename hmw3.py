@@ -119,10 +119,10 @@ x_win_root = node(x_win)
 o_win = [["x","-","-","-"],["-","-","-","-"],["x","-","o","-"],["-","o","-","-"]]
 o_win_root = node(o_win)
 
-'''print("Tie Condition(Calculating..) : ")
+print("Tie Condition(Calculating..) : ")
 print(alpha_beta_pruning(tie_root,-10,10))
 print()
-'''
+    
 print("X Win Condition (Calculating..) : ")
 print(alpha_beta_pruning(x_win_root,-10,10))
 print()
