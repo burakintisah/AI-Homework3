@@ -119,10 +119,10 @@ x_win_root = node(x_win)
 o_win = [["x","-","-","-"],["-","-","-","-"],["x","-","o","-"],["-","o","-","-"]]
 o_win_root = node(o_win)
 
-print("Tie Condition(Calculating..) : ")
+'''print("Tie Condition(Calculating..) : ")
 print(alpha_beta_pruning(tie_root,-10,10))
 print()
-    
+'''
 print("X Win Condition (Calculating..) : ")
 print(alpha_beta_pruning(x_win_root,-10,10))
 print()
@@ -150,14 +150,15 @@ master = Tk()
 master.title("ArcticFoxes")
 w = Canvas(master, width=1500, height=1000, bg="white")
 
-def show_on_canvas (list, y):
+def show_on_canvas (list, y,txt):
     count =  0
+    w.create_text(120, 70 * y - 40, font="Times 20", text=txt, fill="black")
     for l in list:
-
         offset_x = 150*count + 15
-        offset_y = 50 * y
+        offset_y = 70 * y + 20
         line_space = 30
         line_length = 120
+
 
         '''w.create_text(offset_x + 10 , offset_y - 10  , font="Times 20", text="X" , fill="blue")
         w.create_text(offset_x + 20 + 10 , offset_y  - 10  , font="Times 20", text="O" , fill="red")'''
@@ -186,9 +187,9 @@ def show_on_canvas (list, y):
                     #print("o")
         count = count + 1
 
-show_on_canvas(tie_list,1)
-show_on_canvas(x_win_list,4)
-show_on_canvas(o_win_list,7)
+show_on_canvas(tie_list,1," Tie Situation ")
+show_on_canvas(x_win_list,4,"X Win Situation")
+show_on_canvas(o_win_list,7,"O Win Situation ")
 
 scrollbar = Scrollbar(master,orient='horizontal')
 scrollbar.config(command=w.xview)
