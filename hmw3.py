@@ -119,9 +119,10 @@ x_win_root = node(x_win)
 o_win = [["x","-","-","-"],["-","-","-","-"],["x","-","o","-"],["-","o","-","-"]]
 o_win_root = node(o_win)
 
-print("Tie Condition(Calculating..) : ")
+'''print("Tie Condition(Calculating..) : ")
 print(alpha_beta_pruning(tie_root,-10,10))
 print()
+'''
 print("X Win Condition (Calculating..) : ")
 print(alpha_beta_pruning(x_win_root,-10,10))
 print()
@@ -155,8 +156,8 @@ def show_on_canvas (list, y):
 
         offset_x = 150*count + 15
         offset_y = 50 * y
-        line_space = 27
-        line_length = 80
+        line_space = 30
+        line_length = 120
 
         '''w.create_text(offset_x + 10 , offset_y - 10  , font="Times 20", text="X" , fill="blue")
         w.create_text(offset_x + 20 + 10 , offset_y  - 10  , font="Times 20", text="O" , fill="red")'''
@@ -165,23 +166,23 @@ def show_on_canvas (list, y):
         w.create_line(offset_x, offset_y + line_space*1, offset_x + line_length, offset_y + line_space*1 )
         w.create_line(offset_x, offset_y + line_space*2, offset_x + line_length, offset_y + line_space*2 )
 
-        offset_x = 150*count + 35
-        offset_y = offset_y - 20
+        offset_x = 150*count + 45
+        offset_y = offset_y - 30
 
         w.create_line(offset_x + line_space*0, offset_y , offset_x + line_space*0, offset_y + line_length )
         w.create_line(offset_x + line_space*1, offset_y , offset_x + line_space*1, offset_y + line_length )
         w.create_line(offset_x + line_space*2, offset_y , offset_x + line_space*2, offset_y + line_length )
 
         offset_x = 150*count + 15
-        offset_y = offset_y + 20
+        offset_y = offset_y + 30
 
         for i in range (4):
             for j in range(4):
                 if (l.state[i][j] == 'x'):
-                    w.create_text(offset_x + 20*j + 10, offset_y + 20*i - 10, font="Times 18", text="X", fill="blue")
+                    w.create_text(offset_x + line_space*j + 15, offset_y + line_space*i - 15, font="Times 18", text="X", fill="blue")
                     #print("x")
                 elif(l.state[i][j]== 'o'):
-                    w.create_text(offset_x + 20*j + 10, offset_y + 20*i - 10, font="Times 18", text="O", fill="red")
+                    w.create_text(offset_x + line_space*j + 15, offset_y + line_space*i - 15, font="Times 18", text="O", fill="red")
                     #print("o")
         count = count + 1
 
